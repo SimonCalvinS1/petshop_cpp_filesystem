@@ -50,7 +50,7 @@ class Pet {
 	    }
 };
 
-class Birds : public Pet {
+class Birds : public Pet { //single inheritance
 	private:
 	    int cagelength, cagebreadth, cageprice;
 	public:
@@ -74,7 +74,7 @@ class Birds : public Pet {
 	    int getCagePrice() { return cageprice; }
 };
 
-class Dogs : public Pet {
+class Dogs : public Pet { //single inheritance
 	private:
 	    int doghouselen, doghousewid, doghousepri;
 	public:
@@ -98,7 +98,7 @@ class Dogs : public Pet {
 	    int getHousePri() { return doghousepri; }
 };
 
-class Fishes : public Pet {
+class Fishes : public Pet { //single inheritance
 	private:
 	    int tanklength, tankbreadth;
 	    string* watertype;
@@ -119,7 +119,9 @@ class Fishes : public Pet {
 	    }
 };
 
-class Aquarium : public Fishes {
+//Birds, Dogs and Fishes inherit/extend from Pet class demonstrating Hierarchical inheritance
+
+class Aquarium : public Fishes { //multilevel inheritance as Fishes already is inheriting/extending Pet class
 	private:
 	    string* tankName;
 	    int no_of_litres, tankprice;
@@ -197,7 +199,7 @@ class OrderDetails {
 		}
 };
 
-class CustomerOrders : public Employee, public OrderDetails {
+class CustomerOrders : public Employee, public OrderDetails { //multiple inheritance
 	private:
 	    int custId;
 	    string custName;
@@ -228,11 +230,11 @@ class CustomerOrders : public Employee, public OrderDetails {
 	    friend string getorderdate(CustomerOrders& order);
 };
 //friend functions:
-int getorderid(CustomerOrders& order) { return order.o_id; }
-string getorderdate(CustomerOrders& order) { return order.o_date; }
+int getorderid(CustomerOrders& order) { return order.o_id; } //defining a function outside class using a friend function
+string getorderdate(CustomerOrders& order) { return order.o_date; } //defining a function outside class using a friend function
 
 //functions declared inside CustomerOrders class which have no body are defined below :
-void CustomerOrders::yourorder(Birds& bird, Dogs& dog, Aquarium& aqua) {
+void CustomerOrders::yourorder(Birds& bird, Dogs& dog, Aquarium& aqua) { //defining a function outside class without using a friend function
     int choice;
     while (true) {
         cout << "\n--------Select the product to buy--------\n" << endl;
@@ -288,7 +290,7 @@ void CustomerOrders::yourorder(Birds& bird, Dogs& dog, Aquarium& aqua) {
         }
     }
 }
-void CustomerOrders::printOrderDet() {
+void CustomerOrders::printOrderDet() { //defining a function outside class without using a friend function
     cout << "\n----------Order Details----------\n" << endl;
     cout << "Order ID : " << getorderid(*this) << endl;
     cout << "Order Date : " << getorderdate(*this) << endl;
@@ -305,17 +307,17 @@ int main(){
     bird.setPets("Parrot", "Macaw", 8000, 3);
     bird.setBirdCage(6, 6, 300);
     ++bird;
-    petobj = &bird;
+    petobj = &bird; //runtime polymorphism
     petobj->display();
     Dogs dog;
     dog.setPets("Bulldog", "English Bulldog", 2000, 5);
     dog.setHouse(6, 6, 200);
-    !dog;
+    !dog; //dog not available for sale
     Aquarium aqua;
     aqua.setPets("Goldfish", "Fancy Goldfish", 100, 1);
     aqua.setFish(2, 3, "Freshwater");
     aqua.setAqua("D_Tank", 20);
-    petobj = &aqua;
+    petobj = &aqua; //runtime polymorphism
     petobj->display();
     CustomerOrders order;
     string name;
@@ -327,7 +329,8 @@ int main(){
     order.setOrderDet();
     order.yourorder(bird, dog, aqua);
     order.printOrderDet();
-    ofstream fout("orders.txt", ios::app);
+
+    ofstream fout("orders.txt", ios::app); //file system to store details
     fout << "Customer: " << order.getCustName() << ", Total: Rs." << order.getTotal() << endl;
     fout.close();
     e.endProgram();
