@@ -196,6 +196,7 @@ class OrderDetails {
     		time_t now = time(0);
     		char* dt = ctime(&now);
     		o_date = dt;
+			o_date.erase(o_date.find_last_not_of(" \n\r\t") + 1);
 		}
 };
 
@@ -297,6 +298,16 @@ void CustomerOrders::printOrderDet() { //defining a function outside class witho
     cout << "Customer ID : " << custId << endl;
     cout << "Customer Name : " << custName << endl;
     cout << "Total Purchase Amount : Rs. " << totalPrice << endl;
+    
+    ofstream fout("orders.txt", ios::app);
+    fout << "\n----------Order Details----------\n";
+    fout << "Order ID: " << getorderid(*this) << endl;
+    fout << "Order Date: " << getorderdate(*this) << endl;
+    fout << "Customer ID: " << custId << endl;
+    fout << "Customer Name: " << custName << endl;
+    fout << "Total Purchase Amount: Rs. " << totalPrice << endl;
+    fout << "-----------------------------------\n";
+    fout.close();
 }
 
 int main(){
@@ -330,9 +341,6 @@ int main(){
     order.yourorder(bird, dog, aqua);
     order.printOrderDet();
 
-    ofstream fout("orders.txt", ios::app); //file system to store details
-    fout << "Customer: " << order.getCustName() << ", Total: Rs." << order.getTotal() << endl;
-    fout.close();
     e.endProgram();
     return 0;
 }
