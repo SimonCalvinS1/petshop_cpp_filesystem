@@ -3,14 +3,14 @@
 #include <ctime>
 using namespace std;
 
-class Pet {
+class Pet { //main class
 	private:
 	    int petId, price, age;
 	    string* petName;
 	    string* breed;
 	    bool ifavailable;
 	public:
-	    Pet(){
+	    Pet(){ //constructor
 	        petId = 0;
 	        petName = new string;
 	        breed = new string;
@@ -18,7 +18,7 @@ class Pet {
 	        age = 0;
 	        ifavailable = false;
 	    }
-	    virtual ~Pet(){
+	    virtual ~Pet(){ //virtual destructor
 	        delete petName;
 	        delete breed;
 	    }
